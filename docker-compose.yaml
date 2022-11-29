@@ -1,0 +1,30 @@
+services:
+  cake-api:
+    build: .
+    ports:
+      - 80:80
+    depends_on:
+      - mysql-db-dev
+    environment:
+      DB_HOST: mysql-db-dev
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: cake_service
+      HOST_PORT: 80
+    networks:
+      - app
+
+  mysql-db-dev:
+    image: mysql:8.0.31
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cake_service
+    networks:
+      - app
+
+networks:
+  app:
+    external: false
