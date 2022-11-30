@@ -52,7 +52,7 @@ func NewCakeHandler(useCase core.CakeUseCase) *CakeHandler {
 func (h *CakeHandler) GetListCakes(c *gin.Context) {
 	result, err := h.useCase.GetListCakes(c.Request.Context())
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, response.Message{Error: err.Error()})
+		response.Error(c, err)
 		return
 	}
 
@@ -70,7 +70,7 @@ func (h *CakeHandler) GetCakeDetail(c *gin.Context) {
 	cakeID := StrToUint(c.Param("cakeID"))
 	cake, err := h.useCase.GetCakeDetail(c.Request.Context(), cakeID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, response.Message{Error: err.Error()})
+		response.Error(c, err)
 		return
 	}
 	c.JSON(http.StatusOK, response.Message{
@@ -87,7 +87,7 @@ func (h *CakeHandler) CreateNewCake(c *gin.Context) {
 	}
 	cake, err := h.useCase.CreateNewCake(c.Request.Context(), request)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, response.Message{Error: err.Error()})
+		response.Error(c, err)
 		return
 	}
 	c.JSON(http.StatusCreated, response.Message{
@@ -105,7 +105,7 @@ func (h *CakeHandler) UpdateCake(c *gin.Context) {
 	cakeID := StrToUint(c.Param("cakeID"))
 	cake, err := h.useCase.UpdateCake(c.Request.Context(), cakeID, request)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, response.Message{Error: err.Error()})
+		response.Error(c, err)
 		return
 	}
 	c.JSON(http.StatusCreated, response.Message{
@@ -117,7 +117,7 @@ func (h *CakeHandler) UpdateCake(c *gin.Context) {
 func (h *CakeHandler) DeleteCakeByID(c *gin.Context) {
 	cakeID := StrToUint(c.Param("cakeID"))
 	if err := h.useCase.DeleteCakeByID(c.Request.Context(), cakeID); err != nil {
-		c.JSON(http.StatusInternalServerError, response.Message{Error: err.Error()})
+		response.Error(c, err)
 		return
 	}
 	c.JSON(http.StatusOK, response.Message{Message: "cake deleted"})

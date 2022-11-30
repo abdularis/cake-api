@@ -1,9 +1,12 @@
 package core
 
 import (
+	"errors"
 	"fmt"
 	"time"
 )
+
+var ErrDataValidation = errors.New("data validation err")
 
 type Cake struct {
 	ID          uint
@@ -18,13 +21,13 @@ type Cake struct {
 func (c *Cake) Validate() error {
 	switch {
 	case c.Title == "":
-		return fmt.Errorf("title cannot be empty")
+		return fmt.Errorf("%w: title cannot be empty", ErrDataValidation)
 	case c.Description == "":
-		return fmt.Errorf("description cannot be empty")
+		return fmt.Errorf("%w: description cannot be empty", ErrDataValidation)
 	case c.Rating < 0 || c.Rating > 10:
-		return fmt.Errorf("rating should be in range 0 - 10")
+		return fmt.Errorf("%w: rating should be in range 0 - 10", ErrDataValidation)
 	case c.Image == "":
-		return fmt.Errorf("image url cannot be empty")
+		return fmt.Errorf("%w: image url cannot be empty", ErrDataValidation)
 	default:
 		return nil
 	}

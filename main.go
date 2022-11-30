@@ -17,6 +17,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.SetLevel(log.DebugLevel)
 
 	cakeRepo := repository.NewCakeRepository(db)
 	cakeUseCase := core.NewCakeUseCase(cakeRepo)

@@ -6,8 +6,7 @@ import (
 )
 
 var (
-	ErrGeneralDB      = errors.New("general db error")
-	ErrRecordNotFound = errors.New("record not found")
+	ErrRecordNotFound = errors.New("no record found")
 )
 
 type CakeRepository interface {

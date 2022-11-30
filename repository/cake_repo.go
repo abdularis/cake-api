@@ -61,7 +61,7 @@ func (r *cakeRepositoryImpl) FindCakeByID(ctx context.Context, cakeID uint) (*co
 		&cake.CreatedAt,
 		&cake.UpdatedAt)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("err find cake by id: %w", err)
 	}
 	return &cake, nil
 }
@@ -96,7 +96,7 @@ func (r *cakeRepositoryImpl) DeleteCakeByID(ctx context.Context, cakeID uint) er
 	result, err := r.db.Exec("DELETE FROM cakes WHERE id = ?", cakeID)
 	affected, err := result.RowsAffected()
 	if err != nil {
-		return fmt.Errorf("%w", err)
+		return err
 	}
 	if affected == 0 {
 		return core.ErrRecordNotFound

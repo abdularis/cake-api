@@ -41,6 +41,9 @@ func (u *cakeUseCaseImpl) UpdateCake(ctx context.Context, cakeID uint, request C
 	if err != nil {
 		return nil, err
 	}
+	if request == (CakeUpdateRequest{}) {
+		return cake, nil
+	}
 	err = request.ApplyUpdateTo(cake)
 	if err != nil {
 		return nil, err
